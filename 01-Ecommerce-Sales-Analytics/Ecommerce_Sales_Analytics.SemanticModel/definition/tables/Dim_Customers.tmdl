@@ -1,0 +1,80 @@
+table Dim_Customers
+	lineageTag: 5a41847d-9412-4b7b-ac97-22f4e7c9402a
+
+	column Customer_ID
+		dataType: string
+		lineageTag: 8842305c-bc5f-4f98-a611-2377827cc2e6
+		summarizeBy: none
+		sourceColumn: Customer_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_Name
+		dataType: string
+		lineageTag: 79706060-5490-4ded-8740-78c74690f72c
+		summarizeBy: none
+		sourceColumn: Customer_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: e1e3cf57-8b91-4aea-afdc-98cec6dda525
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: eb7f8736-03f3-4744-a7f1-34f8ee456f96
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Signup_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 032ca941-f18e-469c-a1a7-447cff79f7bb
+		summarizeBy: none
+		sourceColumn: Signup_Date
+
+		variation Variation
+			isDefault
+			relationship: 1d6069eb-48e4-46e4-9c3d-2ec0d92c60f6
+			defaultHierarchy: LocalDateTable_aae450ae-bd3b-4f54-9779-cb7046c15a69.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Segment
+		dataType: string
+		lineageTag: 2252f26a-6db8-49a5-8f90-6e4562d1a2c6
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Customers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Dim_Customers.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Customer_ID", type text}, {"Customer_Name", type text}, {"City_State", type text}, {"Signup_Date", type date}, {"Segment", type text}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "City_State", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), {"City_State.1", "City_State.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"City_State.1", type text}, {"City_State.2", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"City_State.1", "City"}, {"City_State.2", "State"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns", {"Customer_ID"}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"Customer_ID"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors", {"Customer_ID"}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Removed Duplicates1",{{"Customer_Name", Text.Trim, type text}})
+				in
+				    #"Trimmed Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

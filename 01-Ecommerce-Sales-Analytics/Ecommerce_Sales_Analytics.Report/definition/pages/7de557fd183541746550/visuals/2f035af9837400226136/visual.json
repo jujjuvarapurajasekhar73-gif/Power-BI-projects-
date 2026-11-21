@@ -1,0 +1,205 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "2f035af9837400226136",
+  "position": {
+    "x": 0,
+    "y": 212.00757131610246,
+    "z": 13,
+    "height": 471.35663913968409,
+    "width": 720.41407728772674,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "lineClusteredColumnComboChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Date"
+                    }
+                  },
+                  "Property": "MONTH"
+                }
+              },
+              "queryRef": "Dim_Date.MONTH",
+              "nativeQueryRef": "MONTH",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "key_measures"
+                    }
+                  },
+                  "Property": "Total_Selling_Price"
+                }
+              },
+              "queryRef": "key_measures.Total_Selling_Price",
+              "nativeQueryRef": "Total_Selling_Price"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "key_measures"
+                    }
+                  },
+                  "Property": "LY_SALES"
+                }
+              },
+              "queryRef": "key_measures.LY_SALES",
+              "nativeQueryRef": "LY_SALES"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Dim_Date"
+                  }
+                },
+                "Property": "MONTH"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 9,
+                      "Percent": 0.2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "key_measures.LY_SALES"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 9,
+                      "Percent": -0.5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "key_measures.Total_Selling_Price"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly Revenue vs Last Year'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "86d03a77a8287dee4e85",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Date"
+              }
+            },
+            "Property": "MONTH"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e8a24ec2b0a501e03da1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "key_measures"
+              }
+            },
+            "Property": "Total_Selling_Price"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5f5df30a36dac76257a0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "key_measures"
+              }
+            },
+            "Property": "LY_SALES"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

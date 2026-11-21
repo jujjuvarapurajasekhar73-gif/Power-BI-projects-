@@ -1,0 +1,72 @@
+table Dim_Products
+	lineageTag: cd732b5b-0471-44dc-9133-5e5784b8a272
+
+	column Product_ID
+		dataType: string
+		lineageTag: 7cec0a39-cb32-478c-b09b-ec30b2a8f38d
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Name
+		dataType: string
+		lineageTag: f0f340a6-02c9-437b-97b0-a55210509a56
+		summarizeBy: none
+		sourceColumn: Product_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 2d22d9d4-769f-4a12-8ed0-d359f00a6b5b
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub_Category
+		dataType: string
+		lineageTag: a3719201-036d-4e61-809f-7097529f7900
+		summarizeBy: none
+		sourceColumn: Sub_Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit_Cost
+		dataType: double
+		lineageTag: d4a9189e-288c-43dd-83ef-d012d20b0ceb
+		summarizeBy: none
+		sourceColumn: Unit_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unit_Price
+		dataType: double
+		lineageTag: e64eb112-d6dc-4a66-a721-c60f468b445d
+		summarizeBy: none
+		sourceColumn: Unit_Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Dim_Products = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Dim_Products.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Product_ID", type text}, {"Product_Name", type text}, {"Category", type text}, {"Sub_Category", type text}, {"Unit_Cost", type number}, {"Unit_Price", type number}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Category", Text.Trim, type text}}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Trimmed Text",{{"Category", Text.Proper, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Capitalized Each Word", {"Product_Name"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

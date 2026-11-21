@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "a09b54fd749acc04be94",
+  "position": {
+    "x": 1388.7600967312089,
+    "y": 0,
+    "z": 3,
+    "height": 146.14114139265314,
+    "width": 279.93232717465952,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "key_measures"
+                    }
+                  },
+                  "Property": "Total_Selling_Price"
+                }
+              },
+              "queryRef": "key_measures.Total_Selling_Price",
+              "nativeQueryRef": "Total_Selling_Price"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "key_measures"
+                  }
+                },
+                "Property": "Total_Selling_Price"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7cfec83902374e84d026",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "key_measures"
+              }
+            },
+            "Property": "Total_Selling_Price"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

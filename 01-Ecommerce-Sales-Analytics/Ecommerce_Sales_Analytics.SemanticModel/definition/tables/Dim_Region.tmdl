@@ -1,0 +1,56 @@
+table Dim_Region
+	lineageTag: ff4700b7-e35b-49b6-86bc-b882f828aa34
+
+	column City
+		dataType: string
+		lineageTag: 79b804c8-a489-4201-89f6-427a499fac49
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: f9fcf6cd-c81d-4fee-a8ac-f266997fa5fb
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 42bbd993-8579-4993-b2ea-a9da04c62863
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 325ef358-1275-4dd2-ad87-a108915bdc80
+		summarizeBy: none
+		sourceColumn: Region_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Region = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Dim_Customers.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Customer_ID", type text}, {"Customer_Name", type text}, {"City_State", type text}, {"Signup_Date", type date}, {"Segment", type text}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "City_State", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), {"City_State.1", "City_State.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"City_State.1", type text}, {"City_State.2", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"City_State.1", "City"}, {"City_State.2", "State"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Customer_Name", "Signup_Date", "Customer_ID"}),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Columns", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Index",{{"Index", "Region_ID"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

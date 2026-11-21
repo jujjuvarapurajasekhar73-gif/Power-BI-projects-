@@ -1,0 +1,183 @@
+table Fact_Sales
+	lineageTag: 7676b27f-7716-4c8d-aaab-9d7dac94f391
+
+	column Order_ID
+		dataType: string
+		lineageTag: 91bd4d98-99b1-44c5-9856-2b55eb2126b5
+		summarizeBy: none
+		sourceColumn: Order_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_ID
+		dataType: string
+		lineageTag: 0852f1ea-f69c-40ac-975f-715adfcabe2b
+		summarizeBy: none
+		sourceColumn: Customer_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_ID
+		dataType: string
+		lineageTag: 4a017a8c-2377-4da8-b268-40d6eb532f27
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: b545fd41-4656-4c8f-ac35-f779ca9c97e0
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		lineageTag: 3c629dd3-cab4-4b58-9d01-bf6e546c9ae0
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Revenue
+		dataType: string
+		lineageTag: 22b06a16-23b3-4ccb-b224-6690f66a550c
+		summarizeBy: none
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_Channel
+		dataType: string
+		lineageTag: 9926db70-46ae-49fe-89dc-a3b9a1d5a00a
+		summarizeBy: none
+		sourceColumn: Sales_Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Payment_Mode
+		dataType: string
+		lineageTag: 54425ea6-8e06-458a-ab3b-e09c77d98b73
+		summarizeBy: none
+		sourceColumn: Payment_Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim_Customers.City'
+		dataType: string
+		lineageTag: 1ce99370-59cd-451f-8c20-1a8c08238042
+		summarizeBy: none
+		sourceColumn: Dim_Customers.City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim_Customers.State'
+		dataType: string
+		lineageTag: 4107f2e5-76cb-45e2-9adb-24e7a1ec8f5f
+		summarizeBy: none
+		sourceColumn: Dim_Customers.State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dim_Customers.Segment'
+		dataType: string
+		lineageTag: 39c9d19f-d318-4e2b-8b3d-63fbecfe41bc
+		summarizeBy: none
+		sourceColumn: Dim_Customers.Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 81fce7bc-8ff0-4815-92c1-6055bbd4a01f
+		summarizeBy: none
+		sourceColumn: Region_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Clean_Order_Date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 3ff03228-b4ae-4d4b-a04b-f60f8aa54100
+		summarizeBy: none
+		sourceColumn: Clean_Order_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Sales = Fact_Sales[Quantity]*RELATED(Dim_Products[Unit_Price])
+		lineageTag: 4aedcd25-2a1a-48f2-8baa-6dc8e2afb5ac
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fact_Sales = m
+		mode: import
+		source = ```
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Fact_Sales.csv"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Order_ID", type text}, {"Order_Date", type text}, {"Customer_ID", type text}, {"Product_ID", type text}, {"Quantity", Int64.Type}, {"Discount", type number}, {"Revenue", type text}, {"Sales_Channel", type text}, {"Payment_Mode", type text}}),
+				    #"Merged Queries" = Table.FuzzyNestedJoin(#"Changed Type", {"Customer_ID"}, Dim_Customers, {"Customer_ID"}, "Dim_Customers", JoinKind.LeftOuter, [IgnoreCase=true, IgnoreSpace=true]),
+				    #"Expanded Dim_Customers" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Customers", {"City", "State", "Segment"}, {"Dim_Customers.City", "Dim_Customers.State", "Dim_Customers.Segment"}),
+				    #"Added Index" = Table.AddIndexColumn(#"Expanded Dim_Customers", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Region_ID"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","-","/",Replacer.ReplaceText,{"Order_Date"}),
+				    #"Added Custom" = Table.AddColumn(#"Replaced Value", "Clean_Order_Date", each let
+				    rawText = Text.Trim(Text.From([Order_Date])),
+				    cleanText = Text.Replace(Text.Replace(rawText, "-", "/"), ".", "/"),
+				    parts = Text.Split(cleanText, "/"),
+				    resultDate = 
+				        if List.Count(parts) = 3 then
+				            let
+				                p0 = try Number.FromText(parts{0}) otherwise null,
+				                p1 = try Number.FromText(parts{1}) otherwise null,
+				                p2 = try Number.FromText(parts{2}) otherwise null
+				            in
+				                if p0 <> null and p1 <> null and p2 <> null then
+				                    // Case 1: Year comes first (yyyy/mm/dd or yyyy/dd/mm)
+				                    if p0 > 1000 then
+				                        if p1 <= 12 and p2 <= 31 then try #date(p0, p1, p2) otherwise null
+				                        else if p2 <= 12 and p1 <= 31 then try #date(p0, p2, p1) otherwise null
+				                        else null
+				                    // Case 2: Year comes last (dd/mm/yyyy or mm/dd/yyyy)
+				                    else if p2 > 1000 then
+				                        if p1 <= 12 and p0 <= 31 then try #date(p2, p1, p0) otherwise null
+				                        else if p0 <= 12 and p1 <= 31 then try #date(p2, p0, p1) otherwise null
+				                        else null
+				                    else null
+				                else
+				                    // Fallback for text-based month names (e.g., 15-Aug-2025)
+				                    try Date.FromText(cleanText, "en-IN") otherwise try Date.FromText(cleanText, "en-US") otherwise null
+				        else
+				            // Fallback for standard date strings
+				            try Date.FromText(cleanText, "en-IN") otherwise try Date.FromText(cleanText, "en-US") otherwise null
+				in
+				    resultDate),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"Order_Date"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Columns", {"Order_ID"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each ([Order_ID] <> "")),
+				    #"Trimmed Text" = Table.TransformColumns(#"Filtered Rows",{{"Customer_ID", Text.Trim, type text}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Trimmed Text", each [Quantity] > 0),
+				    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each true)
+				in
+				    #"Filtered Rows2"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

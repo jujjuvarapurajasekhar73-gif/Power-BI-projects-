@@ -1,0 +1,88 @@
+table key_measures
+	lineageTag: f8578dd1-c5f2-4c50-a3b7-0a2d7473f287
+
+	measure Total_Cost = SUMX(Fact_Sales,Fact_Sales[Quantity]*RELATED(Dim_Products[Unit_Cost]))
+		lineageTag: 6eb798aa-18d8-4e00-bbe4-0b8754595185
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Total_Selling_Price = SUMX(Fact_Sales,Fact_Sales[Quantity]*RELATED(Dim_Products[Unit_Price]))
+		lineageTag: cdf9a314-f476-403b-a3d2-0b96ad430038
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Overall_Profit = [Total_Selling_Price]-[Total_Cost]
+		lineageTag: d471c6d2-d430-4aa2-9aa7-db5b1c5caf34
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit % margin' = DIVIDE([Overall_Profit],[Total_Selling_Price],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6e2a08d6-7641-4cae-b818-320432ea93ec
+
+	measure Total_Orders = DISTINCTCOUNT(Fact_Sales[Order_ID])
+		formatString: 0
+		lineageTag: 1cf4cd8c-7709-4881-a4ba-dcc4fffcdcc2
+
+	measure YTD_Sales = TOTALYTD([Total_Selling_Price],Dim_Date[DATE])
+		lineageTag: 8eb65425-0904-4dc9-ac84-6dfa1af56d76
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure LY_SALES = CALCULATE([Total_Selling_Price],SAMEPERIODLASTYEAR(Dim_Date[DATE]))
+		lineageTag: 3e039394-da0f-4050-973f-22734884a866
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YoY % Growth' = DIVIDE([Total_Selling_Price]-[LY_SALES],[LY_SALES],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 414c7947-b7c3-45e9-8225-4dfa18e0ae68
+
+	measure 'AOV (Average Order Value)' = DIVIDE([Total_Selling_Price],[Total_Orders],0)
+		lineageTag: 04b7ee19-b929-46b1-89c3-b63247c3d11c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Total_customers = DISTINCTCOUNT(Fact_Sales[Customer_ID])
+		formatString: 0
+		lineageTag: 04108822-f440-4733-b5fb-2cd58713cbd8
+
+	measure 'Product Rank' = ```
+			RANKX(ALL(Dim_Products[Product_Name]), [Total_Selling_Price], , DESC, Dense)
+			
+			```
+		formatString: 0
+		lineageTag: dbccb384-a349-4e92-8587-c8e7502a19ea
+
+	measure 'Top Product' = ```
+			CALCULATE(SELECTEDVALUE(Dim_Products[Product_Name]), TOPN(1, ALL(Dim_Products[Product_Name]), [Total_Selling_Price], DESC))
+			
+			```
+		lineageTag: 6322fb62-a0b0-41b4-a176-ec16e4d667fc
+
+	measure 'Lowest Product' = ```
+			CALCULATE(SELECTEDVALUE(Dim_Products[Product_Name]), TOPN(1, ALL(Dim_Products[Product_Name]), [Total_Selling_Price], ASC))
+			
+			```
+		lineageTag: b76fae26-1cfa-477b-8d11-571c1b499d74
+
+	measure '% Sales Contribution' = ```
+			DIVIDE([Total_Selling_Price], CALCULATE([Total_Selling_Price], ALL(Dim_Products)), 0)
+			
+			```
+		lineageTag: 6ce972e2-fea5-4ca1-8a21-a7d58ba76b51
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition key_measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

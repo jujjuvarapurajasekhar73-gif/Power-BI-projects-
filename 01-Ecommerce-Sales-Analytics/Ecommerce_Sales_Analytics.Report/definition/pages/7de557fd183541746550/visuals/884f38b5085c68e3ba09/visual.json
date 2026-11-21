@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "884f38b5085c68e3ba09",
+  "position": {
+    "x": 1667.7250069916265,
+    "y": 0,
+    "z": 0,
+    "height": 146.14114139265314,
+    "width": 251.11576408315048,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "key_measures"
+                    }
+                  },
+                  "Property": "Overall_Profit"
+                }
+              },
+              "queryRef": "key_measures.Overall_Profit",
+              "nativeQueryRef": "Overall_Profit"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "key_measures"
+                  }
+                },
+                "Property": "Overall_Profit"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "29ce2404017ac0188c42",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "key_measures"
+              }
+            },
+            "Property": "Overall_Profit"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

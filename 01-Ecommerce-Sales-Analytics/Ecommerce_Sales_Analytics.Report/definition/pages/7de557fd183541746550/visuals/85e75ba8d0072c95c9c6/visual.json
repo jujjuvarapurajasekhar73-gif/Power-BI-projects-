@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "85e75ba8d0072c95c9c6",
+  "position": {
+    "x": 1224.7039313891355,
+    "y": 65.8664299234493,
+    "z": 2,
+    "height": 148.19946732776094,
+    "width": 164.66607480862325,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "key_measures"
+                    }
+                  },
+                  "Property": "Total_Cost"
+                }
+              },
+              "queryRef": "key_measures.Total_Cost",
+              "nativeQueryRef": "Total_Cost"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "key_measures"
+                  }
+                },
+                "Property": "Total_Cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "79b761835084d3878e90",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "key_measures"
+              }
+            },
+            "Property": "Total_Cost"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

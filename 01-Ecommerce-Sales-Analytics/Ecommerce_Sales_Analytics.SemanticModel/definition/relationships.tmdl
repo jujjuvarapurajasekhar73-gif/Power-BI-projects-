@@ -1,0 +1,21 @@
+relationship AutoDetected_924aeee8-8a14-4264-a35b-8e55612cef94
+	fromColumn: Fact_Sales.Product_ID
+	toColumn: Dim_Products.Product_ID
+
+relationship baaa0107-1bd7-e7cf-e1d5-6379b9fb6d96
+	fromColumn: Fact_Sales.Customer_ID
+	toColumn: Dim_Customers.Customer_ID
+
+relationship 1d6069eb-48e4-46e4-9c3d-2ec0d92c60f6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Customers.Signup_Date
+	toColumn: LocalDateTable_aae450ae-bd3b-4f54-9779-cb7046c15a69.Date
+
+relationship b4fc673f-04af-5597-bd42-93108d52cf8b
+	fromColumn: Fact_Sales.Region_ID
+	toColumn: Dim_Region.Region_ID
+
+relationship 7e745177-c196-2366-be1d-00aa4994a57e
+	fromColumn: Fact_Sales.Clean_Order_Date
+	toColumn: Dim_Date.DATE
+

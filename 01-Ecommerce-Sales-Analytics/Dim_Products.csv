@@ -1,0 +1,58 @@
+Product_ID,Product_Name,Category,Sub_Category,Unit_Cost,Unit_Price
+PROD-101,Smartphones Model A-101,Electronics,Smartphones,9663.52,12200.25
+PROD-102,Smartphones Model B-102,Electronics,Smartphones,4270.43,5814.64
+PROD-103,Smartphones Model C-103,electronics,Smartphones,11099.77,17630.32
+PROD-104,Laptops Model A-104,Electronics,Laptops,13404.26,17338.0
+PROD-105,Laptops Model B-105,Electronics,Laptops,6444.44,8151.56
+PROD-106,Laptops Model C-106,Electronics,Laptops,3435.84,5162.96
+PROD-107,Headphones Model A-107,Electronics,Headphones,592.73,799.84
+PROD-108,Headphones Model B-108,  Fashion  ,Headphones,9818.29,14948.06
+PROD-109,Headphones Model C-109,Electronics,Headphones,3462.52,5348.32
+PROD-110,Smartwatches Model A-110,Electronics,Smartwatches,12179.57,15264.04
+PROD-111,Smartwatches Model B-111,Electronics,Smartwatches,12126.12,19390.51
+PROD-112,Smartwatches Model C-112,Electronics,Smartwatches,5235.71,6951.66
+PROD-113,Cameras Model A-113,Electronics,Cameras,14366.75,20376.32
+PROD-114,Cameras Model B-114,Electronics,Cameras,1572.64,2041.85
+PROD-115,Cameras Model C-115,Electronics,Cameras,12742.92,19775.27
+PROD-116,Men Casual Wear Model A-116,Fashion,cookware,12145.5,19613.35
+PROD-117,Men Casual Wear Model B-117,Fashion,Men Casual Wear,8136.18,14128.95
+PROD-118,Men Casual Wear Model C-118,Fashion,Men Casual Wear,5802.31,8854.44
+PROD-119,Women Ethnic Wear Model A-119,Fashion,Women Ethnic Wear,12475.19,19452.06
+PROD-120,Women Ethnic Wear Model B-120,Fashion,Women Ethnic Wear,12953.26,19930.87
+PROD-121,Women Ethnic Wear Model C-121,Fashion,Women Ethnic Wear,10627.66,13528.08
+PROD-122,Footwear Model A-122,Fashion,Footwear,3572.89,4983.09
+PROD-123,Footwear Model B-123,Fashion,Footwear,1380.92,1886.88
+PROD-124,Footwear Model C-124,Fashion,Footwear,1694.82,2354.08
+PROD-125,Watches Model A-125,Fashion,Watches,9608.13,13762.84
+PROD-126,Watches Model B-126,Fashion,Watches,5678.68,7693.21
+PROD-127,Watches Model C-127,Fashion,Watches,4151.27,7133.24
+PROD-128,Backpacks Model A-128,Fashion,Backpacks,9790.92,15220.63
+PROD-129,Backpacks Model B-129,Fashion,Backpacks,2732.85,4412.36
+PROD-130,Backpacks Model C-130,Fashion,Backpacks,2618.36,3769.73
+PROD-131,Cookware Model A-131,Home & Kitchen,Cookware,14844.95,23306.57
+PROD-132,Cookware Model B-132,Home & Kitchen,Cookware,8442.86,13443.63
+PROD-133,Cookware Model C-133,Home & Kitchen,Cookware,12674.21,20760.36
+PROD-134,Bedding Model A-134,Home & Kitchen,Bedding,3589.91,4545.01
+PROD-135,Bedding Model B-135,Home & Kitchen,Bedding,4868.71,6737.66
+PROD-136,Bedding Model C-136,Home & Kitchen,Bedding,3322.55,5719.62
+PROD-137,Home Decor Model A-137,Home & Kitchen,Home Decor,13170.24,18534.99
+PROD-138,Home Decor Model B-138,Home & Kitchen,Home Decor,9900.49,14334.09
+PROD-139,Home Decor Model C-139,Home & Kitchen,Home Decor,13735.3,20320.36
+PROD-140,Kitchen Appliances Model A-140,Home & Kitchen,Kitchen Appliances,4120.23,5658.37
+PROD-141,Kitchen Appliances Model B-141,Home & Kitchen,Kitchen Appliances,8508.25,11753.05
+PROD-142,Kitchen Appliances Model C-142,Home & Kitchen,Kitchen Appliances,8851.87,15038.54
+PROD-143,Storage Model A-143,Home & Kitchen,Storage,6111.13,8309.06
+PROD-144,Storage Model B-144,Home & Kitchen,Storage,14963.56,22516.61
+PROD-145,Storage Model C-145,Home & Kitchen,Storage,1545.46,1968.23
+PROD-146,Skincare Model A-146,Beauty & Personal Care,Skincare,1822.81,2850.37
+PROD-147,Skincare Model B-147,Beauty & Personal Care,Skincare,11922.77,17420.12
+PROD-148,Skincare Model C-148,Beauty & Personal Care,Skincare,1140.21,1642.83
+PROD-149,Haircare Model A-149,Beauty & Personal Care,Haircare,14942.6,22631.42
+PROD-150,Haircare Model B-150,Beauty & Personal Care,Haircare,14571.96,24486.57
+PROD-151,Haircare Model C-151,Beauty & Personal Care,Haircare,369.92,595.7
+PROD-152,Fragrances Model A-152,Beauty & Personal Care,Fragrances,10289.31,15624.16
+PROD-153,Fragrances Model B-153,Beauty & Personal Care,Fragrances,4149.01,6515.94
+PROD-154,Fragrances Model C-154,Beauty & Personal Care,Fragrances,1850.97,2716.08
+PROD-155,Grooming Model A-155,Beauty & Personal Care,Grooming,6915.11,11941.76
+PROD-156,Grooming Model B-156,Beauty & Personal Care,Grooming,13162.62,18186.72
+PROD-157,Grooming Model C-157,Beauty & Personal Care,Grooming,7608.67,10190.49
