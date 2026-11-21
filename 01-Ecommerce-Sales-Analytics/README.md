@@ -1,6 +1,7 @@
 # 📊 E-Commerce Sales & Profitability Analytics Dashboard (Power BI)
 
-![Dashboard Preview](dashboard_preview.png)
+![Dashboard Preview](Screenshot%202026-11-21%20212110.png)
+
 
 ## 📌 Project Overview
 An end-to-end Business Intelligence solution designed to analyze e-commerce sales performance, profit margins, regional demand, and product rankings across multi-year transactions (2024–2026).
