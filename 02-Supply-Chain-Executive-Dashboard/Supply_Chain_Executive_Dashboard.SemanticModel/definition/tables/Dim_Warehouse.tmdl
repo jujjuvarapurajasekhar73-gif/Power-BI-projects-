@@ -1,0 +1,56 @@
+table Dim_Warehouse
+	lineageTag: 2398ea4c-2eab-44d2-9ef2-3d2dacdc40dd
+
+	column Warehouse_ID
+		dataType: string
+		lineageTag: 7c9eadfe-9431-4d35-a806-f195cd5cb8c7
+		summarizeBy: none
+		sourceColumn: Warehouse_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Warehouse_Name
+		dataType: string
+		lineageTag: a74c9c5a-d8d8-43c7-a198-511d0d6f15ba
+		summarizeBy: none
+		sourceColumn: Warehouse_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: fa98d2bf-0b0f-4420-b0ed-e5a535eb79dd
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 96092c4f-bb1e-4321-bf85-bd4ebbe78c52
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Storage_Capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: a72ad39c-9079-4bb2-af5b-dbb7f219d1f2
+		summarizeBy: none
+		sourceColumn: Storage_Capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Warehouse = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Supply Chain & Inventory Optimization\Dim_Warehouse.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Warehouse_ID", type text}, {"Warehouse_Name", type text}, {"City", type text}, {"Region", type text}, {"Storage_Capacity", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

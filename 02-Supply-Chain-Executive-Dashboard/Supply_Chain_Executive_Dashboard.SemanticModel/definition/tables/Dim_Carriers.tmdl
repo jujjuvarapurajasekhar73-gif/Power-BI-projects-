@@ -1,0 +1,48 @@
+table Dim_Carriers
+	lineageTag: a40820a4-4dcf-40cb-8019-bdf3ea47966a
+
+	column Carrier_ID
+		dataType: string
+		lineageTag: 60bee328-8da3-46ba-b0dc-727627fa592e
+		summarizeBy: none
+		sourceColumn: Carrier_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Carrier_Name
+		dataType: string
+		lineageTag: 6ab9b276-305f-43a7-a7e9-0fa1bb0048d9
+		summarizeBy: none
+		sourceColumn: Carrier_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transport_Mode
+		dataType: string
+		lineageTag: 0f0f1092-d3c5-49e0-82da-15d6c539e2f3
+		summarizeBy: none
+		sourceColumn: Transport_Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column SLA_Days
+		dataType: int64
+		formatString: 0
+		lineageTag: 70440dab-1477-4de3-9f22-cb31c62f430f
+		summarizeBy: none
+		sourceColumn: SLA_Days
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Carriers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Supply Chain & Inventory Optimization\Dim_Carriers.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Carrier_ID", type text}, {"Carrier_Name", type text}, {"Transport_Mode", type text}, {"SLA_Days", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

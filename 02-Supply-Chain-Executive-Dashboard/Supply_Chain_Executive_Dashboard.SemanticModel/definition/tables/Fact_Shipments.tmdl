@@ -1,0 +1,143 @@
+table Fact_Shipments
+	lineageTag: 167ac3c7-a068-421e-883b-d94afb55bd89
+
+	column Shipment_ID
+		dataType: string
+		lineageTag: 7760b970-9896-4445-bb2b-b25e3013614c
+		summarizeBy: none
+		sourceColumn: Shipment_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2779788d-84c0-429f-87cc-fb62a198798b
+		summarizeBy: none
+		sourceColumn: Order_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ship_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6f499670-61ca-4aee-934d-c0f6bdae20d7
+		summarizeBy: none
+		sourceColumn: Ship_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Delivery_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3e2c0584-1d45-4adc-843b-b66366e19494
+		summarizeBy: none
+		sourceColumn: Delivery_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Product_ID
+		dataType: string
+		lineageTag: 8b23d3f3-479b-48ae-988b-5a6461bd134c
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Warehouse_ID
+		dataType: string
+		lineageTag: 9924723e-80a3-4d8d-aebe-c5817e94e096
+		summarizeBy: none
+		sourceColumn: Warehouse_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Carrier_ID
+		dataType: string
+		lineageTag: 04de91d5-2ef1-44bc-ba69-57f0d56d7b21
+		summarizeBy: none
+		sourceColumn: Carrier_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Qty
+		dataType: int64
+		formatString: 0
+		lineageTag: dfb8186e-bab1-4dca-9308-07b0ed01e812
+		summarizeBy: sum
+		sourceColumn: Order_Qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit_Cost
+		dataType: double
+		lineageTag: 892e00b9-24d1-4e31-8ba9-7fa757125f9a
+		summarizeBy: sum
+		sourceColumn: Unit_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Shipping_Cost
+		dataType: double
+		lineageTag: 68490caf-bac6-4706-ad16-c6b8e29f64a7
+		summarizeBy: sum
+		sourceColumn: Shipping_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Order_Status
+		dataType: string
+		lineageTag: cfaadc27-a6d0-4746-a934-808783e5e927
+		summarizeBy: none
+		sourceColumn: Order_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Shipments = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Raja shekar\Downloads\power bi practice\Supply Chain & Inventory Optimization\Fact_Shipments.csv"),[Delimiter=",", Columns=11, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				
+				    ParseMixedDate = (val as any) as nullable date =>
+				        let
+				            txt = Text.Trim(Text.From(val)),
+				            cleanTxt = Text.Replace(txt, "-", "/"),
+				            parts = Text.Split(cleanTxt, "/"),
+				            parsed = if List.Count(parts) = 3 then
+				                if Text.Length(parts{0}) = 4 then
+				                    #date(Number.From(parts{0}), Number.From(parts{1}), Number.From(parts{2}))
+				                else if Number.From(parts{0}) > 12 then
+				                    #date(Number.From(parts{2}), Number.From(parts{1}), Number.From(parts{0}))
+				                else
+				                    #date(Number.From(parts{2}), Number.From(parts{0}), Number.From(parts{1}))
+				            else null
+				        in
+				            try parsed otherwise null,
+				
+				    CleanDates = Table.TransformColumns(#"Promoted Headers", {
+				        {"Order_Date", ParseMixedDate, type date},
+				        {"Ship_Date", ParseMixedDate, type date},
+				        {"Delivery_Date", ParseMixedDate, type date}
+				    }),
+				    #"Changed Type" = Table.TransformColumnTypes(CleanDates,{{"Order_Qty", Int64.Type}, {"Unit_Cost", type number}, {"Shipping_Cost", type number}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each [Order_Qty] > 0),
+				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows","","WH-Unknown",Replacer.ReplaceValue,{"Warehouse_ID"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

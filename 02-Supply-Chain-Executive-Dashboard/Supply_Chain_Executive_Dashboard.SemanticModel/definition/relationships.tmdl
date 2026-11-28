@@ -1,0 +1,31 @@
+relationship AutoDetected_937dfcb2-9759-48d8-88ab-0beb5437cda0
+	fromColumn: Fact_Shipments.Product_ID
+	toColumn: Dim_Products.Product_ID
+
+relationship AutoDetected_0ef77764-fc88-42df-896f-2441d6a33ef1
+	fromColumn: Fact_Shipments.Carrier_ID
+	toColumn: Dim_Carriers.Carrier_ID
+
+relationship 2eef72eb-952e-c129-3951-d3d6eff3a122
+	fromColumn: Fact_Shipments.Warehouse_ID
+	toColumn: Dim_Warehouse.Warehouse_ID
+
+relationship 2dd131ed-2ba9-4c87-ad17-13704305a1ec
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Dim Date'.Date
+	toColumn: LocalDateTable_ba543d49-a95e-4735-8ec2-677b3465bafa.Date
+
+relationship c4548ff7-aa47-d4ad-b003-dd8e32e33f43
+	isActive: false
+	fromColumn: Fact_Shipments.Ship_Date
+	toColumn: 'Dim Date'.Date
+
+relationship 7c4752dd-68d4-f109-0854-11c9768bd65c
+	isActive: false
+	fromColumn: Fact_Shipments.Delivery_Date
+	toColumn: 'Dim Date'.Date
+
+relationship bb8ee164-7705-7214-ede5-ef58b101fde5
+	fromColumn: Fact_Shipments.Order_Date
+	toColumn: 'Dim Date'.Date
+

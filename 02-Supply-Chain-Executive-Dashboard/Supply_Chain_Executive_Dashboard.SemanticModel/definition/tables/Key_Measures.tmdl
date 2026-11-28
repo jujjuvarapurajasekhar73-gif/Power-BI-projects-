@@ -1,0 +1,164 @@
+table Key_Measures
+	lineageTag: bdabf3a9-4592-4a4e-aac6-b3654c34816d
+
+	measure 'Total Revenue' = ```
+			SUMX(Fact_Shipments, Fact_Shipments[Order_Qty] * RELATED(Dim_Products[Unit_Price]))
+			
+			```
+		lineageTag: 48277c6b-fd13-47b5-9510-7886a0259fa8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Shipped Revenue' = ```
+			CALCULATE([Total Revenue], USERELATIONSHIP(Fact_Shipments[Ship_Date], 'Dim Date'[Date]))
+			
+			```
+		lineageTag: 581fa087-10c1-4f3c-ab74-be0618ede6f9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Delivered Revenue' = ```
+			CALCULATE([Total Revenue], USERELATIONSHIP(Fact_Shipments[Delivery_Date], 'Dim Date'[Date]))
+			
+			```
+		lineageTag: 710dea64-3b51-4cb1-906a-5bc7879ec4b6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Product Cost' = ```
+			SUMX(Fact_Shipments, Fact_Shipments[Order_Qty] * Fact_Shipments[Unit_Cost])
+			
+			```
+		lineageTag: 093736df-d08f-4d98-86fd-ec723acfc8ec
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Shipping Cost' = ```
+			SUM(Fact_Shipments[Shipping_Cost])
+			
+			```
+		lineageTag: d576d024-6c55-4910-8206-fd834925ceb6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Net Profit' = ```
+			[Total Revenue] - [Total Product Cost] - [Total Shipping Cost]
+			
+			```
+		lineageTag: f72f2f75-8475-4ea5-9ecd-ec7f3de6ffca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Net Profit Margin %' = ```
+			DIVIDE([Net Profit], [Total Revenue], 0)
+			
+			```
+		lineageTag: 3ffebda1-4bce-4e26-b4f4-6ba56eb82019
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Shipments' = ```
+			DISTINCTCOUNT(Fact_Shipments[Shipment_ID])
+			
+			```
+		formatString: 0
+		lineageTag: 622bc7ae-7460-4de3-b2b1-0611e6d0d946
+
+	measure 'Total Units Shipped' = ```
+			SUM(Fact_Shipments[Order_Qty])
+			
+			```
+		formatString: 0
+		lineageTag: 688d9eda-1f86-4c88-9fab-91ef3e345d31
+
+	measure 'Avg Delivery Lead Time (Days)' = ```
+			AVERAGEX(Fact_Shipments, DATEDIFF(Fact_Shipments[Order_Date], Fact_Shipments[Delivery_Date], DAY))
+			
+			```
+		lineageTag: ee309d35-8dec-4ba7-ade1-a70ea18e9540
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'On-Time Delivery %' = ```
+			
+			DIVIDE(
+			    COUNTROWS(FILTER(Fact_Shipments, DATEDIFF(Fact_Shipments[Order_Date], Fact_Shipments[Delivery_Date], DAY) <= RELATED(Dim_Carriers[SLA_Days]))),
+			    [Total Shipments],
+			    0
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 33fd2e6b-df20-4b1c-8895-975aeb98b7e9
+
+	measure 'Delayed Shipments' = ```
+			
+			COUNTROWS(
+			    FILTER(
+			        Fact_Shipments,
+			        DATEDIFF(Fact_Shipments[Order_Date], Fact_Shipments[Delivery_Date], DAY) > RELATED(Dim_Carriers[SLA_Days])
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b6e46c2c-1b58-4c13-aabd-0f6e1afe10c2
+
+	measure 'Average Order Value' = DIVIDE([Total Revenue],[Total Shipments],0)
+		lineageTag: d163d364-a3c3-4407-99e4-53dbe4b55835
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YTD Revenue' = TOTALYTD([Total Revenue],'Dim Date'[Date])
+		lineageTag: 535dd4bb-6967-43df-a755-d13fb1a000e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Year Revenue (PY Revenue)' = CALCULATE([Total Revenue],SAMEPERIODLASTYEAR('Dim Date'[Date]))
+		lineageTag: d24fc349-2c89-46d7-a5ee-14dd443f9b98
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YoY Revenue Growth %' = DIVIDE([Total Revenue]-[Previous Year Revenue (PY Revenue)],[Previous Year Revenue (PY Revenue)],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1d593abe-4c68-4202-b9c7-1438ca17e689
+
+	measure 'Shipping Cost %' = DIVIDE([Total Shipping Cost],[Total Revenue],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8d32ac0e-beb6-43a4-97c2-657a369ba9a7
+
+	measure 'Storage Capacity Utilization %' = DIVIDE([Total Units Shipped],SUM(Dim_Warehouse[Storage_Capacity]),0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 310e596e-b0d2-4029-8f9a-4571cdeebbab
+
+	measure '% Revenue Contribution by Products' = ```
+			DIVIDE([Total Revenue], CALCULATE([Total Revenue], ALL(Fact_Shipments)), 0)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 418c6f00-1725-4667-a8ae-f1a267999e8b
+
+	measure 'Product Revenue Rank' = ```
+			(RANKX(ALL(Dim_Products[Product_Name]), [Total Revenue])) 
+			```
+		formatString: 0
+		lineageTag: 6084069b-dc22-4be8-9c94-1f53211a9c56
+
+	measure 'Top Performing Carrier' = ```
+			CONCATENATEX(TOPN(1, VALUES(Dim_Carriers[Carrier_Name]), [Total Shipments]), Dim_Carriers[Carrier_Name], ", ")
+			
+			```
+		lineageTag: 037c3aa1-b3e3-4399-8ccc-25605f111d92
+
+	partition Key_Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

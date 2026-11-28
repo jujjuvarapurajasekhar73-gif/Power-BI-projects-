@@ -1,0 +1,7 @@
+Warehouse_ID,Warehouse_Name,City,Region,Storage_Capacity
+WH-01,Hyderabad Central Hub,Hyderabad,South,50000
+WH-02,Mumbai West Logistics,Mumbai,West,75000
+WH-03,Bengaluru Tech Park WH,Bengaluru,South,60000
+WH-04,Delhi NCR North Hub,New Delhi,North,80000
+WH-05,Chennai Port Facility,Chennai,South,55000
+WH-06,Kolkata East Depot,Kolkata,East,45000

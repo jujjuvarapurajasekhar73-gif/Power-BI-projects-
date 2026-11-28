@@ -1,0 +1,51 @@
+Product_ID,Product_Name,Category,Unit_Price,Safety_Stock_Level
+PRD-001,Pallet Wrap Roll Model-101, packaging materials ,216.8,200
+PRD-002,CNC Valve Model-102, industrial machinery,4214.24,30
+PRD-003,Server Rack Model-103,ELECTRONICS,3630.36,50
+PRD-004,Pallet Wrap Roll Model-104, packaging materials ,594.4,200
+PRD-005,Diagnostic Kit Model-105,MEDICAL SUPPLIES,647.8,120
+PRD-006,Brake Assembly Model-106,automotive parts ,876.28,80
+PRD-007,Server Rack Model-107,Electronics,1921.51,50
+PRD-008,Diagnostic Kit Model-108,MEDICAL SUPPLIES,1523.43,120
+PRD-009,Diagnostic Kit Model-109,MEDICAL SUPPLIES,838.02,120
+PRD-010,Pallet Wrap Roll Model-110, packaging materials ,570.79,200
+PRD-011,Brake Assembly Model-111,automotive parts ,1329.06,80
+PRD-012,Pallet Wrap Roll Model-112,Packaging Materials,316.91,200
+PRD-013,Server Rack Model-113, electronics ,3704.06,50
+PRD-014,Server Rack Model-114,ELECTRONICS,3503.86,50
+PRD-015,Brake Assembly Model-115,Automotive Parts,1466.89,80
+PRD-016,CNC Valve Model-116,Industrial Machinery,9200.49,30
+PRD-017,Brake Assembly Model-117,Automotive Parts,1045.3,80
+PRD-018,Brake Assembly Model-118,automotive parts ,1032.12,80
+PRD-019,Brake Assembly Model-119,Automotive Parts,2248.94,80
+PRD-020,Server Rack Model-120, electronics ,3608.11,50
+PRD-021,Diagnostic Kit Model-121,MEDICAL SUPPLIES,712.2,120
+PRD-022,Brake Assembly Model-122,automotive parts ,989.12,80
+PRD-023,CNC Valve Model-123, industrial machinery,8305.83,30
+PRD-024,Pallet Wrap Roll Model-124,Packaging Materials,681.27,200
+PRD-025,Brake Assembly Model-125,Automotive Parts,2185.65,80
+PRD-026,Server Rack Model-126,Electronics,1351.22,50
+PRD-027,CNC Valve Model-127,Industrial Machinery,7911.48,30
+PRD-028,Server Rack Model-128,Electronics,4022.55,50
+PRD-029,Server Rack Model-129,Electronics,2454.42,50
+PRD-030,Diagnostic Kit Model-130,Medical Supplies,1580.66,120
+PRD-031,Brake Assembly Model-131,Automotive Parts,1190.37,80
+PRD-032,Brake Assembly Model-132,Automotive Parts,1302.82,80
+PRD-033,CNC Valve Model-133, industrial machinery,7412.74,30
+PRD-034,Pallet Wrap Roll Model-134, packaging materials ,538.82,200
+PRD-035,Pallet Wrap Roll Model-135,Packaging Materials,530.99,200
+PRD-036,Diagnostic Kit Model-136,MEDICAL SUPPLIES,1739.52,120
+PRD-037,Server Rack Model-137,ELECTRONICS,2725.46,50
+PRD-038,CNC Valve Model-138, industrial machinery,9426.66,30
+PRD-039,Pallet Wrap Roll Model-139, packaging materials ,562.9,200
+PRD-040,CNC Valve Model-140,Industrial Machinery,7292.3,30
+PRD-041,Server Rack Model-141, electronics ,1955.86,50
+PRD-042,Server Rack Model-142, electronics ,3856.65,50
+PRD-043,Brake Assembly Model-143,automotive parts ,1442.58,80
+PRD-044,CNC Valve Model-144,Industrial Machinery,8891.95,30
+PRD-045,Pallet Wrap Roll Model-145,Packaging Materials,675.82,200
+PRD-046,Brake Assembly Model-146,Automotive Parts,1310.3,80
+PRD-047,Diagnostic Kit Model-147,Medical Supplies,1172.57,120
+PRD-048,Pallet Wrap Roll Model-148, packaging materials ,425.31,200
+PRD-049,CNC Valve Model-149, industrial machinery,3477.41,30
+PRD-050,Diagnostic Kit Model-150,MEDICAL SUPPLIES,1416.26,120

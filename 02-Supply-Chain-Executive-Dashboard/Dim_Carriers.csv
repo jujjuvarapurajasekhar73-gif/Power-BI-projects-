@@ -1,0 +1,7 @@
+Carrier_ID,Carrier_Name,Transport_Mode,SLA_Days
+CR-01,BlueDart Express,Air,2
+CR-02,Delhivery Surface,Road,5
+CR-03,Gati Freight,Road,6
+CR-04,Maersk Coastal,Sea,10
+CR-05,Concor Rail Cargo,Rail,4
+CR-06,DHL Priority Air,Air,1
