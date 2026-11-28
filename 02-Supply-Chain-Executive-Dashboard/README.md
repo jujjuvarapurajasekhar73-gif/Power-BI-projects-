@@ -1,6 +1,7 @@
 # 🚚 Supply Chain & Inventory Optimization Executive Dashboard (Power BI)
 
-![Supply Chain Dashboard Preview](dashboard_preview.png)
+![Supply Chain Dashboard Preview](Screenshot%202026-11-29%20004111.png)
+
 
 ## 📌 Project Overview
 An end-to-end **Power BI Business Intelligence solution** designed to analyze supply chain operations, carrier SLA performance, warehouse bottlenecks, and financial profitability across multiple regions. Built using the modern **Power BI Project (`.pbip`)** format for enterprise version control and CI/CD readiness.
